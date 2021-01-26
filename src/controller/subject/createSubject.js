@@ -1,6 +1,6 @@
-import { Subject } from '../../Schemas/subject';
+import { Subject } from '../../class/subject';
 
-export const create = async (data) => {
+export const createSubject = async (data) => {
 	try {
 		const newSubject = await new Subject(data).save();
 		return newSubject;
@@ -9,7 +9,7 @@ export const create = async (data) => {
 	}
 };
 
-export const createAPI = async (req, res) => {
+export const createSubjectAPI = async (req, res) => {
 	const {
 		name,
 		color,
@@ -28,8 +28,9 @@ export const createAPI = async (req, res) => {
 		endDate,
 		weekDay,
 		comment,
+		mark: [],
 	};
 
-	const created = await create(data);
+	const created = await createSubject(data);
 	res.status(201).json(created);
 };

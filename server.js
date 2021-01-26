@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import router from './src/router';
 
-import { initDB } from './src/schemas';
+import { initDB } from './src/class';
 
 initDB();
 
