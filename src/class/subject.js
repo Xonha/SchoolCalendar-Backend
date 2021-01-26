@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import { markSchema } from './mark';
+import mongoose, { Schema } from 'mongoose';
+import { Mark } from './mark';
 
-export const Subject = mongoose.model('Subject', {
+export const subjectSchema = mongoose.Schema({
 	name: String,
 	color: String,
 	teacherName: String,
@@ -9,5 +9,12 @@ export const Subject = mongoose.model('Subject', {
 	endDate: Date,
 	weekDay: Number,
 	comment: String,
-	marks: [markSchema],
+	marks: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Mark',
+		},
+	],
 });
+
+export const Subject = mongoose.model('Subject', subjectSchema);

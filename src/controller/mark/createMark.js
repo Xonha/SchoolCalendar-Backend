@@ -6,12 +6,10 @@ export const createMark = async (markData) => {
 	try {
 		const newMark = await new Mark(markData).save();
 		const subject = await readSubjectById(markData.subjectId);
-		const subjectMarks = subject.marks;
-		subjectMarks.push(newMark);
-		const newSubject = updateSubject(markData.subjectId, {
-			...subject,
-			marks: subjectMarks,
-		});
+
+		subject.marks.push(newMark);
+
+		const newSubject = await updateSubject(markData.subjectId, subject);
 		return newSubject;
 	} catch (e) {
 		throw new Error('Não foi possível criar nota');

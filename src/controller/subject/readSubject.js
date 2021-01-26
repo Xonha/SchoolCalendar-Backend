@@ -23,7 +23,7 @@ export const readAllSubjects = async () => {
 		const allSubjects = await Subject.find();
 		return allSubjects;
 	} catch (e) {
-		throw new Error('Não foi possível buscar por essa matéria');
+		throw new Error('Não foi possível buscar matérias');
 	}
 };
 

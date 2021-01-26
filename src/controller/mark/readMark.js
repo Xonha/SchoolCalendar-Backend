@@ -6,10 +6,10 @@ export const readMarkById = async (id) => {
 		if (mark) {
 			return mark;
 		} else {
-			throw new Error('Matéria não econtrada');
+			throw new Error('Nota não econtrada');
 		}
 	} catch (e) {
-		throw new Error('Não foi possível buscar por essa matéria');
+		throw new Error('Não foi possível buscar por essa nota');
 	}
 };
 
@@ -23,7 +23,7 @@ export const readAllMarks = async () => {
 		const allMarks = await Mark.find();
 		return allMarks;
 	} catch (e) {
-		throw new Error('Não foi possível buscar por essa matéria');
+		throw new Error('Não foi possível buscar notas');
 	}
 };
 

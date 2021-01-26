@@ -2,7 +2,9 @@ import { Subject } from '../../class/subject';
 
 export const updateSubject = async (id, update) => {
 	try {
-		const updatedSubject = await Subject.findByIdAndUpdate(id, update);
+		const updatedSubject = await Subject.findByIdAndUpdate(id, update, {
+			useFindAndModify: true,
+		});
 		if (updatedSubject) {
 			return updatedSubject;
 		} else {

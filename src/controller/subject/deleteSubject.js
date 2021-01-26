@@ -1,6 +1,6 @@
 import { Subject } from '../../class/subject';
 
-export const deleteSubject = async (id, update) => {
+export const deleteSubject = async (id) => {
 	try {
 		const deletedSubject = await Subject.findByIdAndDelete(id);
 		if (deletedSubject) {
@@ -14,6 +14,6 @@ export const deleteSubject = async (id, update) => {
 };
 
 export const deleteSubjectAPI = async (req, res) => {
-	const deletedSubject = await deletedSubject(req.params.id);
+	const deletedSubject = await deleteSubject(req.params.id);
 	res.status(200).json(deletedSubject);
 };

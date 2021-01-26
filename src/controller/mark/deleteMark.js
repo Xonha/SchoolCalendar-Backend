@@ -1,19 +1,35 @@
-import { Subject } from '../../class/subject';
+import { Mark } from '../../class/mark';
+import { readSubjectById } from '../subject/readSubject';
+import { updateSubject } from '../subject/updateSubject';
 
-export const deleteMark = async (id, update) => {
+export const deleteMark = async (id) => {
 	try {
-		const deletedSubject = await Subject.findByIdAndDelete(id);
-		if (deletedSubject) {
-			return deletedSubject;
+		const deletedMark = await Mark.findByIdAndDelete(id, {
+			useFindAndModify: true,
+		});
+
+		if (deletedMark) {
+			const subjectToUpdate = await readSubjectById(deletedMark.subjectId);
+
+			subjectToUpdate.marks = subjectToUpdate.marks.filter((markId) => {
+				if (markId._id.equals(deletedMark.id)) {
+					return false;
+				}
+				return true;
+			});
+
+			updateSubject(subjectToUpdate.id, subjectToUpdate);
+
+			return deletedMark;
 		} else {
-			throw new Error('Matéria não econtrada');
+			throw new Error('Nota não econtrada');
 		}
 	} catch (e) {
-		throw new Error('Não foi possível buscar por essa matéria');
+		throw new Error('Não foi possível deletar nota');
 	}
 };
 
 export const deleteMarkAPI = async (req, res) => {
-	const deletedSubject = await deleteMark(req.params.id);
-	res.status(200).json(deletedSubject);
+	const deletedMark = await deleteMark(req.params.id);
+	res.status(200).json(deletedMark);
 };

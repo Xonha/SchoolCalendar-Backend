@@ -5,7 +5,7 @@ export const createSubject = async (data) => {
 		const newSubject = await new Subject(data).save();
 		return newSubject;
 	} catch (e) {
-		throw new Error('Não foi possível criar');
+		throw new Error('Não foi possível criar matéria');
 	}
 };
 
