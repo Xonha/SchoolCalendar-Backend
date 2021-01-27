@@ -1,4 +1,4 @@
-import { Subject } from '../../class/subject';
+import { Subject } from '../../class/subjectClass';
 
 export const createSubject = async (subjectData) => {
 	try {
@@ -10,24 +10,14 @@ export const createSubject = async (subjectData) => {
 };
 
 export const createSubjectAPI = async (req, res) => {
-	const {
-		name,
-		color,
-		teacherName,
-		startDate,
-		endDate,
-		weekDay,
-		comment,
-	} = req.body;
+	const { name, color, teacherName } = req.body;
 
 	const subjectData = {
 		name,
 		color,
 		teacherName,
-		startDate,
-		endDate,
-		weekDay,
-		comment,
+		schedule: [],
+		event: [],
 		mark: [],
 	};
 

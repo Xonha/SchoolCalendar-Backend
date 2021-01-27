@@ -1,4 +1,4 @@
-import { Subject } from '../../class/subject';
+import { Subject } from '../../class/subjectClass';
 
 export const deleteSubject = async (id) => {
 	try {

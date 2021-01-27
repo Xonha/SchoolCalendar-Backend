@@ -1,4 +1,4 @@
-import { Event } from '../../class/event';
+import { Event } from '../../class/eventClass';
 
 export const createEvent = async (eventData) => {
 	try {

@@ -1,4 +1,4 @@
-import { Mark } from '../../class/mark';
+import { Mark } from '../../class/markClass';
 import { readSubjectById } from '../subject/readSubject';
 import { updateSubject } from '../subject/updateSubject';
 
