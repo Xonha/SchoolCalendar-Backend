@@ -1,10 +1,20 @@
-import { Event } from '../../class/eventClass';
+import { readSubjectById } from '../subject/readSubject';
+import { updateSubject } from '../subject/updateSubject';
 
-export const updateEvent = async (id, update) => {
+export const updateEvent = async (subjectId, eventId, newEvent) => {
 	try {
-		const updatedEvent = await Event.findByIdAndUpdate(id, update, {
-			useFindAndModify: true,
+		const subject = await readSubjectById(subjectId);
+		subject.events = subject.events.map((event) => {
+			if (event.id === eventId) {
+				return {
+					...event._doc,
+					...newEvent,
+				};
+			}
+			return event;
 		});
+
+		const updatedEvent = await updateSubject(subjectId, subject);
 		if (updatedEvent) {
 			return updatedEvent;
 		} else {
@@ -16,6 +26,9 @@ export const updateEvent = async (id, update) => {
 };
 
 export const updateEventAPI = async (req, res) => {
-	const updatedEvent = await updateEvent(req.params.id, req.body);
+	const { subjectId, id } = req.params;
+	const { name, date, time, category, description } = req.body;
+	const eventData = { name, date, time, category, description };
+	const updatedEvent = await updateEvent(subjectId, id, eventData);
 	res.status(200).json(updatedEvent);
 };

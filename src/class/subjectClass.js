@@ -17,7 +17,7 @@ export const subjectSchema = mongoose.Schema({
 			name: String,
 			date: Date,
 			time: Date,
-			type: String,
+			category: String,
 			description: String,
 		},
 	],

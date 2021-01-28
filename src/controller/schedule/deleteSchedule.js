@@ -1,12 +1,12 @@
 import { updateSubject } from '../subject/updateSubject';
 import { readSubjectById } from '../subject/readSubject';
 
-export const deleteEvent = async (subjectId, eventId) => {
+export const deleteSchedule = async (subjectId, scheduleId) => {
 	try {
 		const subject = await readSubjectById(subjectId);
 
-		subject.events = subject.events.filter((event) => {
-			if (event.id === eventId) {
+		subject.schedules = subject.schedules.filter((schedule) => {
+			if (schedule.id === scheduleId) {
 				return false;
 			}
 			return true;
@@ -18,19 +18,19 @@ export const deleteEvent = async (subjectId, eventId) => {
 
 			return updatedSubject;
 		} else {
-			throw new Error('Evento não econtrada');
+			throw new Error('Horário não econtrada');
 		}
 	} catch (e) {
-		throw new Error('Não foi possível buscar por esse evento');
+		throw new Error('Não foi possível buscar por esse scheduleo');
 	}
 };
 
-export const deleteEventAPI = async (req, res) => {
+export const deleteScheduleAPI = async (req, res) => {
 	const { subjectId, id } = req.params;
 	try {
-		const deletedEvent = await deleteEvent(subjectId, id);
-		console.log(deletedEvent);
-		res.status(200).json(deletedEvent);
+		const deletedSchedule = await deleteSchedule(subjectId, id);
+		console.log(deletedSchedule);
+		res.status(200).json(deletedSchedule);
 	} catch (e) {
 		res.status(500).json(e.message);
 	}

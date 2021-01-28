@@ -1,26 +1,20 @@
-import { Mark } from '../../class/markClass';
 import { readSubjectById } from '../subject/readSubject';
 import { updateSubject } from '../subject/updateSubject';
 
-export const deleteMark = async (id) => {
+export const deleteMark = async (subjectId, markId) => {
 	try {
-		const deletedMark = await Mark.findByIdAndDelete(id, {
-			useFindAndModify: true,
+		const subject = await readSubjectById(subjectId);
+
+		subject.marks = subject.marks.filter((mark) => {
+			if (mark.id === markId) {
+				return false;
+			}
+			return true;
 		});
 
-		if (deletedMark) {
-			const subjectToUpdate = await readSubjectById(deletedMark.subjectId);
-
-			subjectToUpdate.marks = subjectToUpdate.marks.filter((markId) => {
-				if (markId._id.equals(deletedMark.id)) {
-					return false;
-				}
-				return true;
-			});
-
-			updateSubject(subjectToUpdate.id, subjectToUpdate);
-
-			return deletedMark;
+		const updatedSubject = await updateSubject(subjectId, subject);
+		if (updatedSubject) {
+			return updatedSubject;
 		} else {
 			throw new Error('Nota não econtrada');
 		}
@@ -30,6 +24,7 @@ export const deleteMark = async (id) => {
 };
 
 export const deleteMarkAPI = async (req, res) => {
-	const deletedMark = await deleteMark(req.params.id);
+	const { subjectId, id } = req.params;
+	const deletedMark = await deleteMark(subjectId, id);
 	res.status(200).json(deletedMark);
 };

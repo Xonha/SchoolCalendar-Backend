@@ -2,7 +2,9 @@ import { Subject } from '../../class/subjectClass';
 
 export const deleteSubject = async (id) => {
 	try {
-		const deletedSubject = await Subject.findByIdAndDelete(id);
+		const deletedSubject = await Subject.findByIdAndDelete(id, {
+			useFindAndModify: true,
+		});
 		if (deletedSubject) {
 			return deletedSubject;
 		} else {

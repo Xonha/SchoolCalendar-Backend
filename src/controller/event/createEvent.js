@@ -1,17 +1,21 @@
-import { Event } from '../../class/eventClass';
+import { updateSubject } from '../subject/updateSubject';
+import { readSubjectById } from '../subject/readSubject';
 
-export const createEvent = async (eventData) => {
+export const createEvent = async (subjectId, eventData) => {
 	try {
-		const newEvent = await new Event(eventData).save();
-		return newEvent;
+		const subject = await readSubjectById(subjectId);
+		subject.events.push(eventData);
+		const updatedSubject = updateSubject(subjectId, subject);
+		return updatedSubject;
 	} catch (e) {
+		console.log(e);
 		throw new Error('Não foi possível criar evento');
 	}
 };
 
 export const createEventAPI = async (req, res) => {
-	const { subjectId, name, date, time, type, description } = req.body;
-	const eventData = { subjectId, name, date, time, type, description };
-	const createdEvent = await createEvent(eventData);
+	const { name, date, time, category, description } = req.body;
+	const eventData = { name, date, time, category, description };
+	const createdEvent = await createEvent(req.params.subjectId, eventData);
 	res.status(201).json(createdEvent);
 };
