@@ -18,6 +18,15 @@ export const subjectSchema = mongoose.Schema({
 			date: Date,
 			time: Date,
 			category: String,
+			repetition: {
+				type: String,
+				enum: ['none', 'day', 'week', 'month', 'year'],
+				default: 'none',
+			},
+			repetitionEnd: {
+				type: Date,
+				default: null,
+			},
 			description: String,
 		},
 	],

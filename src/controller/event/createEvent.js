@@ -14,8 +14,24 @@ export const createEvent = async (subjectId, eventData) => {
 };
 
 export const createEventAPI = async (req, res) => {
-	const { name, date, time, category, description } = req.body;
-	const eventData = { name, date, time, category, description };
+	const {
+		name,
+		date,
+		time,
+		category,
+		description,
+		repetition,
+		repetitionEnd,
+	} = req.body;
+	const eventData = {
+		name,
+		date,
+		time,
+		category,
+		description,
+		repetition,
+		repetitionEnd,
+	};
 	const createdEvent = await createEvent(req.params.subjectId, eventData);
 	res.status(201).json(createdEvent);
 };

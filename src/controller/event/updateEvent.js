@@ -27,8 +27,24 @@ export const updateEvent = async (subjectId, eventId, newEvent) => {
 
 export const updateEventAPI = async (req, res) => {
 	const { subjectId, id } = req.params;
-	const { name, date, time, category, description } = req.body;
-	const eventData = { name, date, time, category, description };
+	const {
+		name,
+		date,
+		time,
+		category,
+		description,
+		repetition,
+		repetitionEnd,
+	} = req.body;
+	const eventData = {
+		name,
+		date,
+		time,
+		category,
+		description,
+		repetition,
+		repetitionEnd,
+	};
 	const updatedEvent = await updateEvent(subjectId, id, eventData);
 	res.status(200).json(updatedEvent);
 };
